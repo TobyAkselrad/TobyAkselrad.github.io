@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador desde el 7 de octubre</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .contador {
+            font-size: 2em;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="contador" id="contador"></div>
+
+    <script>
+        function actualizarContador() {
+            const fechaInicio = new Date("October 7, 2023 00:00:00").getTime();
+            const ahora = new Date().getTime();
+            const diferencia = ahora - fechaInicio;
+
+            const segundosTotales = Math.floor(diferencia / 1000);
+            const minutosTotales = Math.floor(segundosTotales / 60);
+            const horasTotales = Math.floor(minutosTotales / 60);
+
+            const segundos = segundosTotales % 60;
+            const minutos = minutosTotales % 60;
+            const horas = horasTotales;
+
+            document.getElementById("contador").innerHTML = 
+                `${horas}h ${minutos}m ${segundos}s`;
+        }
+
+        setInterval(actualizarContador, 1000);
+    </script>
+</body>
+</html>
