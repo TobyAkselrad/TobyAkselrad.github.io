@@ -15,45 +15,51 @@
             flex: 1;
             margin: 0;
             padding: 0;
-            overflow: hidden; /* Oculta la barra de desplazamiento */
+            background-color: #121212;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .contador {
             display: flex;
-            gap: 1em; /* Cambiado de 2em a 1em */
+            gap: 20px;
         }
 
         p {
-            margin: 1em; /* Cambiado de 2em a 1em */
+            margin: 20px;
             align-self: center;
         }
 
         .unidad {
             text-align: center;
-            font-size: 2.5em; /* Cambiado de 4em a 2.5em */
+            font-size: 60px;
             color: red;
             background-color: rgb(18, 18, 18);
-            height: 7em; /* Cambiado de 12.5em a 7em */
-            width: 7em; /* Cambiado de 12.5em a 7em */
+            height: 200px;
+            width: 200px;
             justify-content: center;
             align-content: center;
-            border-radius: 0.5em; /* Sin cambios */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .numero, .numero1 {
-            font-size: 2.5em; /* Cambiado de 4em a 2.5em */
+            font-size: 60px;
             font-weight: bold;
         }
 
         .texto {
-            font-size: 2.5em; /* Cambiado de 4em a 2.5em */
+            font-size: 60px;
             font-weight: normal;
         }
 
         h1 {
-            font-size: 2.5em; /* Cambiado de 4em a 2.5em */
+            font-size: 60px;
             color: red;
-            margin-bottom: 1em; /* Cambiado de 2.5em a 1em */
+            margin-bottom: 40px;
         }
 
         @keyframes pulse {
@@ -75,14 +81,14 @@
 </head>
 <body>
 
-    <h1>Hay 250 secuestrados hace</h1>
+    <h1>Hay 150 secuestrados hace</h1>
 
     <div class="contador" id="contador">
         <div class="unidad">
             <div class="numero" id="meses"></div>
             <div class="texto">Meses</div>
         </div>
-        <p>:</p>
+         <p>:</p>
         <div class="unidad">
             <div class="numero" id="dias"></div>
             <div class="texto">Días</div>
@@ -108,10 +114,9 @@
         function aplicarAnimacion(id) {
             const elemento = document.getElementById(id);
             elemento.classList.add('pulse-animation');
-
             setTimeout(() => {
                 elemento.classList.remove('pulse-animation');
-            }, 300); // Duración de la animación en milisegundos
+            }, 300);
         }
 
         function actualizarContador() {
@@ -123,52 +128,33 @@
             const minutosTotales = Math.floor(segundosTotales / 60);
             const horasTotales = Math.floor(minutosTotales / 60);
             const diasTotales = Math.floor(horasTotales / 24);
-            const mesesTotales = Math.floor(diasTotales / 30.44); // Aproximación para meses
+            const mesesTotales = Math.floor(diasTotales / 30.44);
 
             const segundos = segundosTotales % 60;
             const minutos = minutosTotales % 60;
             const horas = horasTotales % 24;
-            const dias = diasTotales % 30.44; // Aproximación para días en un mes
+            const dias = diasTotales % 30.44; 
             const meses = mesesTotales;
 
-            document.getElementById("meses").innerHTML = meses;
-            document.getElementById("dias").innerHTML = Math.floor(dias);
-            document.getElementById("horas").innerHTML = horas;
-            document.getElementById("minutos").innerHTML = minutos;
-            document.getElementById("segundos").innerHTML = segundos;
-
-            // Aplicar animación si hay cambios
-            const elementos = {
-                meses: document.getElementById("meses").innerHTML,
-                dias: document.getElementById("dias").innerHTML,
-                horas: document.getElementById("horas").innerHTML,
-                minutos: document.getElementById("minutos").innerHTML,
-                segundos: document.getElementById("segundos").innerHTML
-            };
-
-            if (elementos.meses != meses) {
+            // Cambié esto: comparando y aplicando la animación directamente en cada caso
+            if (document.getElementById("meses").innerHTML != meses) {
                 document.getElementById("meses").innerHTML = meses;
-                aplicarAnimacion('meses');
+                aplicarAnimacion('meses'); // Agregué esta línea para aplicar la animación
             }
-
-            if (Math.floor(elementos.dias) != Math.floor(dias)) {
+            if (Math.floor(document.getElementById("dias").innerHTML) != Math.floor(dias)) {
                 document.getElementById("dias").innerHTML = Math.floor(dias);
-                aplicarAnimacion('dias');
+                aplicarAnimacion('dias'); // Agregué esta línea para aplicar la animación
             }
-
-            if (elementos.horas != horas) {
+            if (document.getElementById("horas").innerHTML != horas) {
                 document.getElementById("horas").innerHTML = horas;
-                aplicarAnimacion('horas');
+                aplicarAnimacion('horas'); // Agregué esta línea para aplicar la animación
             }
-
-            if (elementos.minutos != minutos) {
+            if (document.getElementById("minutos").innerHTML != minutos) {
                 document.getElementById("minutos").innerHTML = minutos;
-                aplicarAnimacion('minutos');
+                aplicarAnimacion('minutos'); // Agregué esta línea para aplicar la animación
             }
-
-            if (elementos.segundos != segundos) { // Añadido para segundos
+            if (document.getElementById("segundos").innerHTML != segundos) {
                 document.getElementById("segundos").innerHTML = segundos;
-                aplicarAnimacion('segundos');
             }
         }
 
