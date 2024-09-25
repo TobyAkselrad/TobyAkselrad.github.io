@@ -13,6 +13,14 @@
             font-family: 'Merriweather', serif;
             flex-direction: column;
             flex: 1;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         .contador {
@@ -20,7 +28,7 @@
             gap: 20px;
         }
 
-        p{
+        p {
             margin: 20px;
             align-self: center;
         }
@@ -35,9 +43,10 @@
             justify-content: center;
             align-content: center;
             border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .numero {
+        .numero, .numero1 {
             font-size: 60px;
             font-weight: bold;
         }
@@ -47,18 +56,32 @@
             font-weight: normal;
         }
 
-        h1{
+        h1 {
             font-size: 60px;
             color: red;
             margin-bottom: 40px;
         }
 
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
+        .pulse-animation {
+            animation: pulse 0.3s ease-in-out;
+        }
     </style>
 </head>
 <body>
 
-    <h1>Hay 250 secuestrados hace</h1>
+    <h1>Hay 150 secuestrados hace</h1>
 
     <div class="contador" id="contador">
         <div class="unidad">
@@ -82,12 +105,20 @@
         </div>
         <p>:</p>
         <div class="unidad">
-            <div class="numero" id="segundos"></div>
+            <div class="numero1" id="segundos"></div>
             <div class="texto">Segs</div>
         </div>
     </div>
 
     <script>
+        function aplicarAnimacion(id) {
+            const elemento = document.getElementById(id);
+            elemento.classList.add('pulse-animation');
+            setTimeout(() => {
+                elemento.classList.remove('pulse-animation');
+            }, 300);
+        }
+
         function actualizarContador() {
             const fechaInicio = new Date("October 7, 2023 00:00:00").getTime();
             const ahora = new Date().getTime();
@@ -97,19 +128,34 @@
             const minutosTotales = Math.floor(segundosTotales / 60);
             const horasTotales = Math.floor(minutosTotales / 60);
             const diasTotales = Math.floor(horasTotales / 24);
-            const mesesTotales = Math.floor(diasTotales / 30.44); // Aproximación para meses
+            const mesesTotales = Math.floor(diasTotales / 30.44);
 
             const segundos = segundosTotales % 60;
             const minutos = minutosTotales % 60;
             const horas = horasTotales % 24;
-            const dias = diasTotales % 30.44; // Aproximación para días en un mes
+            const dias = diasTotales % 30.44; 
             const meses = mesesTotales;
 
-            document.getElementById("meses").innerHTML = meses;
-            document.getElementById("dias").innerHTML = Math.floor(dias);
-            document.getElementById("horas").innerHTML = horas;
-            document.getElementById("minutos").innerHTML = minutos;
-            document.getElementById("segundos").innerHTML = segundos;
+            // Cambié esto: comparando y aplicando la animación directamente en cada caso
+            if (document.getElementById("meses").innerHTML != meses) {
+                document.getElementById("meses").innerHTML = meses;
+                aplicarAnimacion('meses'); // Agregué esta línea para aplicar la animación
+            }
+            if (Math.floor(document.getElementById("dias").innerHTML) != Math.floor(dias)) {
+                document.getElementById("dias").innerHTML = Math.floor(dias);
+                aplicarAnimacion('dias'); // Agregué esta línea para aplicar la animación
+            }
+            if (document.getElementById("horas").innerHTML != horas) {
+                document.getElementById("horas").innerHTML = horas;
+                aplicarAnimacion('horas'); // Agregué esta línea para aplicar la animación
+            }
+            if (document.getElementById("minutos").innerHTML != minutos) {
+                document.getElementById("minutos").innerHTML = minutos;
+                aplicarAnimacion('minutos'); // Agregué esta línea para aplicar la animación
+            }
+            if (document.getElementById("segundos").innerHTML != segundos) {
+                document.getElementById("segundos").innerHTML = segundos;
+            }
         }
 
         setInterval(actualizarContador, 1000);
